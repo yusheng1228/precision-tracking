@@ -1,5 +1,6 @@
 cmake_minimum_required(VERSION 2.8)
 project(precision_tracking)
+set(CMAKE_CXX_STANDARD 14)
 
 if (NOT CMAKE_BUILD_TYPE)
     message(STATUS "No build type selected, default to Release")
@@ -7,8 +8,8 @@ if (NOT CMAKE_BUILD_TYPE)
 endif()
 
 find_package(Boost REQUIRED thread signals)
-find_package(Eigen REQUIRED)
-find_package(PCL REQUIRED COMPONENTS common kdtree io)
+find_package(Eigen3 REQUIRED)
+find_package(PCL REQUIRED )
 
 include_directories (include ${EIGEN_INCLUDE_DIRS} ${PCL_INCLUDE_DIRS})
 
@@ -56,4 +57,8 @@ add_library (${PROJECT_NAME}
 add_executable (test_tracking test_tracking.cpp)
 target_link_libraries(${PROJECT_NAME} ${EIGEN_LIBRARIES} ${PCL_LIBRARIES})
 target_link_libraries (test_tracking ${PROJECT_NAME})
+
+add_executable (post_process post_process.cpp)
+target_link_libraries(${PROJECT_NAME} ${EIGEN_LIBRARIES} ${PCL_LIBRARIES})
+target_link_libraries (post_process ${PROJECT_NAME})
 
